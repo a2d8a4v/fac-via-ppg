@@ -279,6 +279,9 @@ def train(output_directory, log_directory, checkpoint_path, warm_start, n_gpus,
 if __name__ == '__main__':
     hparams = create_hparams()
 
+    # debug
+    hparams.output_directory = '../../output'
+    
     if not hparams.output_directory:
         raise FileExistsError('Please specify the output dir.')
     else:

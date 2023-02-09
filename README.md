@@ -5,38 +5,41 @@ prepare our interspeech'19 paper titled "[Foreign Accent Conversion by Synthesiz
 
 ### Install
 
-This project uses `conda` to manage all the dependencies, you should install [anaconda](https://anaconda.org/) if you have not done so. 
+This project uses `conda` to manage all the dependencies, you should install [Minoconda](https://docs.conda.io/en/latest/miniconda.html) if you have not done so. I used the version of python 3.8.
 
 ```bash
 # Clone the repo
-git clone https://github.com/guanlongzhao/fac-via-ppg.git $PROJECT_ROOT_DIR
-cd $PROJECT_ROOT_DIR
+git clone https://github.com/guanlongzhao/fac-via-ppg.git
+cd fac-via-ppg
+PROJECT_ROOT_DIR=$pwd
 
-# Install dependencies
-conda env create -f environment.yml
+# install Minoconda
+sh Miniconda3-latest-Linux-x86_64.sh
 
-# Activate the installed environment
-conda activate ppg-speech
+# activate the environment
+. YOUR_CONDA_DIR_PATH/bin/activate
+
+# use the specific pacakages with certained version in environment.yml. It takes some time to finish.
+conda env update --file environment.yml --prune
+
+# install pykaldi. It takes a long time to finish.
+# if pykaldi installing failed, please read https://github.com/pykaldi/pykaldi#installation
+git clone https://github.com/pykaldi/pykaldi.git
+pushd pykaldi
+cd tools
+./check_dependencies.sh  # checks if system dependencies are installed
+./install_protobuf.sh    # installs both the C++ library and the Python package
+./install_clif.sh        # installs both the C++ library and the Python package
+./install_kaldi.sh       # installs the C++ library
+cd ..
+python setup.py install
+popd
 
 # Compile protocol buffer to get the data_utterance_pb2.py file
 protoc -I=src/common --python_out=src/common src/common/data_utterance.proto
 
 # Include src in your PYTHONPATH
 export PYTHONPATH=$PROJECT_ROOT_DIR/src:$PYTHONPATH
-```
-
-or, you can create an empty environment with Miniconda from [here](https://docs.conda.io/en/latest/miniconda.html), and then
-
-```
-# install Minoconda
-sh Miniconda3-latest-Linux-x86_64.sh
-
-# activate the environment
-. $PROJECT_ROOT_DIR/bin/activate
-
-# use the specific pacakages with certained version in environment.yml. It make take several minutes to finish.
-conda env update --file local.yml --prune
-
 ```
 
 If `conda` complains that some packages are missing, it is very likely that you can find a similar version of that package on anaconda's archive.
@@ -62,7 +65,8 @@ The training and validation data should be specified in text files, see `data/fi
 
 ```bash
 cd src/script
-python train_ppg2mel.py
+mkdir -pv ../../output
+python train_ppg2mel.py --output_directory ../../output
 ```
 The `FP16` mode will not work, unfortunately :(
 
