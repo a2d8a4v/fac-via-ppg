@@ -9,7 +9,7 @@ This project uses `conda` to manage all the dependencies, you should install [an
 
 ```bash
 # Clone the repo
-git clone https://github.com/guanlongzhao/fac-via-ppg.git
+git clone https://github.com/guanlongzhao/fac-via-ppg.git $PROJECT_ROOT_DIR
 cd $PROJECT_ROOT_DIR
 
 # Install dependencies
@@ -23,6 +23,20 @@ protoc -I=src/common --python_out=src/common src/common/data_utterance.proto
 
 # Include src in your PYTHONPATH
 export PYTHONPATH=$PROJECT_ROOT_DIR/src:$PYTHONPATH
+```
+
+or, you can create an empty environment with Miniconda from [here](https://docs.conda.io/en/latest/miniconda.html), and then
+
+```
+# install Minoconda
+sh Miniconda3-latest-Linux-x86_64.sh
+
+# activate the environment
+. $PROJECT_ROOT_DIR/bin/activate
+
+# use the specific pacakages with certained version in environment.yml. It make take several minutes to finish.
+conda env update --file local.yml --prune
+
 ```
 
 If `conda` complains that some packages are missing, it is very likely that you can find a similar version of that package on anaconda's archive.
