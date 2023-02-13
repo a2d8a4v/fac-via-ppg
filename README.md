@@ -11,7 +11,7 @@ This project uses `conda` to manage all the dependencies, you should install [Mi
 # Clone the repo
 git clone https://github.com/a2d8a4v/fac-via-ppg.git
 cd fac-via-ppg
-PROJECT_ROOT_DIR=pwd
+PROJECT_ROOT_DIR=$(pwd)
 
 # install Minoconda
 sh Miniconda3-latest-Linux-x86_64.sh
