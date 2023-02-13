@@ -9,9 +9,9 @@ This project uses `conda` to manage all the dependencies, you should install [Mi
 
 ```bash
 # Clone the repo
-git clone https://github.com/guanlongzhao/fac-via-ppg.git
+git clone https://github.com/a2d8a4v/fac-via-ppg.git
 cd fac-via-ppg
-PROJECT_ROOT_DIR=$pwd
+PROJECT_ROOT_DIR=pwd
 
 # install Minoconda
 sh Miniconda3-latest-Linux-x86_64.sh
@@ -66,7 +66,8 @@ The training and validation data should be specified in text files, see `data/fi
 ```bash
 cd src/script
 mkdir -pv ../../output
-python train_ppg2mel.py --output_directory ../../output
+mkdir -pv ../../checkpoints
+python train_ppg2mel.py
 ```
 The `FP16` mode will not work, unfortunately :(
 
